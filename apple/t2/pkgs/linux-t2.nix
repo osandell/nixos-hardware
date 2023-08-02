@@ -2,10 +2,10 @@
 
 let
   patchRepo = fetchFromGitHub {
-    owner = "t2linux";
+    owner = "osandell";
     repo = "linux-t2-patches";
-    rev = "c0db79a25bc37dbd0c27636914b3903016a2fc39";
-    hash = "sha256-VILJAK7F0E/8Z3sOzsUpS9dmtpull2XVXQkakZ0UTIA=";
+    rev = "2c64723a17de8f436dcf41acf6d59033ba407e3f";
+    hash = "sha256-cP5qG4QUgPfc2uqu6xwfWmvQ67Hmk5lyEdaA5i6sA4A=";
   };
 
   version = "6.4.2";
@@ -34,7 +34,6 @@ buildLinux (args // {
     HID_APPLE_IBRIDGE = module;
     HID_APPLE = module;
     HID_APPLE_MAGIC_BACKLIGHT = module;
-    HID_APPLE_TOUCHBAR = module;
     HID_SENSOR_ALS = module;
     SND_PCM = module;
     STAGING = yes;
@@ -43,4 +42,4 @@ buildLinux (args // {
   kernelPatches = lib.attrsets.mapAttrsToList (file: type: { name = file; patch = "${patchRepo}/${file}"; })
     (lib.attrsets.filterAttrs (file: type: type == "regular" && lib.strings.hasSuffix ".patch" file)
       (builtins.readDir patchRepo));
-} // (args.argsOverride or {}))
+} // (args.argsOverride or { }))
